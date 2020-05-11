@@ -102,3 +102,6 @@ ENV/
 
 # project specifics
 old/
+
+# customized variant of get_token_template.py
+get_token.py
