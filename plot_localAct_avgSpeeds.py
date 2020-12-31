@@ -5,6 +5,7 @@ import datetime
 from pylab import *
 
 # pass activity directory as command-line argument!
+# pass the year of concern as second command-line argument
 
 data_dict = {}
 ids = []
@@ -15,13 +16,14 @@ for root, dirs, files in os.walk(str(sys.argv[1]), topdown=True):
     for act_filename in files:
         with open(os.path.join(root, act_filename)) as act_file:
             act_json = json.load(act_file)
+            if act_json['start_date'].split('T')[0].split('-')[0] != sys.argv[2]:
+                continue
             print(act_json['start_date'])
             try:
                 gear_name = act_json['gear']['name']
             except:
                 gear_name = None
             if gear_name and not act_json['commute']:
-                print(gear_name)
                 if not gear_name in data_dict.keys():
                     data_dict[gear_name] = [[], [], [], []] # date, speed, watts, kcal
                 data_dict[gear_name][0].append(datetime.datetime.strptime(act_json['start_date'].split('T')[0], '%Y-%m-%d'))
