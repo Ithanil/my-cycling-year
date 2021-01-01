@@ -30,16 +30,23 @@ print(dates_weight)
 print(weights)
 
 
-dates_ftp = []
-ftps = []
+dates_ftp = {}
+ftps = {}
+ftp_types = []
 with open(str(sys.argv[2])) as ftp_file:
     for line in ftp_file:
         if line[0] != '#' and line[0] != '\n':
-            lsplit = line.split(',')
+            lsplit = line[:-1].split(',')
             print(lsplit)
-            dates_ftp.append(datetime.datetime.strptime(lsplit[0], '%Y-%m-%d'))
-            ftps.append(float(lsplit[1]))
-dates_ftp = dates.date2num(dates_ftp)
+            ftp_type = str(lsplit[2]).strip().strip('"')
+            if ftp_type not in ftp_types:
+                ftp_types.append(ftp_type)
+                dates_ftp[ftp_type] = []
+                ftps[ftp_type] = []            
+            dates_ftp[ftp_type].append(datetime.datetime.strptime(lsplit[0], '%Y-%m-%d'))
+            ftps[ftp_type].append(float(lsplit[1]))
+for ftp_type in ftp_types:
+    dates_ftp[ftp_type] = dates.date2num(dates_ftp[ftp_type])
 print(dates_ftp)
 print(ftps)
 
@@ -47,15 +54,17 @@ figure()
 suptitle('Evolution of weight and threshold power estimation\n over the course of year ' + sys.argv[3])
 subplot(211)
 plot(dates_weight, weights, 's--')
-xlim(datetime.date(int(sys.argv[3]), 1, 1), datetime.date(int(sys.argv[3]), 12, 31))
+xlim(datetime.date(int(sys.argv[3])-1, 12, 25), datetime.date(int(sys.argv[3])+1, 1, 5))
 xticks([])
 ylabel('Weight [kg]')
 
 subplot(212)
-plot(dates_ftp, ftps, 's--')
+for ftp_type in ftp_types:
+    plot(dates_ftp[ftp_type], ftps[ftp_type], 's')
 xlabel('Date')
 ylabel('Est. anaerobic threshold [W]')
-xlim(datetime.date(int(sys.argv[3]), 1, 1), datetime.date(int(sys.argv[3]), 12, 31))
+xlim(datetime.date(int(sys.argv[3])-1, 12, 25), datetime.date(int(sys.argv[3])+1, 1, 5))
+legend(ftp_types)
 
 #setup dates formatting
 ax = gca()
