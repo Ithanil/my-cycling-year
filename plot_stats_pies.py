@@ -76,18 +76,20 @@ for time in type_time.values():
     type_total_time += time
 
 figure()
+subplot(231)
 pie(gear_time.values(), labels=gear_time.keys(), autopct='%1.1f%%', shadow=False, startangle=0)
 axis('equal')
 title('Shares of (active) riding time (' + str(int(gear_total_time)) + 'h)')
 
-figure()
+subplot(233)
 pie(gear_dist.values(), labels=gear_dist.keys(), autopct='%1.1f%%', shadow=False, startangle=0)
 axis('equal')
 title('Shares of riding distance (' + str(int(gear_total_dist)) + 'km)')
 
-figure()
+subplot(235)
 pie(type_time.values(), labels=type_time.keys(), autopct='%1.1f%%', shadow=False, startangle=0)
 axis('equal')
 title('Shares of (active) activity time (' + str(int(type_total_time)) + 'h)')
 
+tight_layout()
 show()
