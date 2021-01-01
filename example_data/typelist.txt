@@ -1,0 +1,4 @@
+Commute
+Ride
+VirtualRide
+WeightTraining
