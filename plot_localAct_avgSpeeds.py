@@ -72,7 +72,7 @@ for gear_name in data_dict_all:
     dates_num = dates.date2num(data_dict_all[gear_name][0])
     plot(dates_num, data_dict_all[gear_name][1], '*')
 xlim(datetime.date(int(sys.argv[2])-1, 12, 25), datetime.date(int(sys.argv[2])+1, 1, 5))
-ylim(0)
+#ylim(0)
 xticks([])
 ylabel('Avg. Speed [km/h]')
 
@@ -88,7 +88,7 @@ for gear_name in data_dict_all:
             null_data.append(None)
         plot(dates_num, null_data, '*')
 xlim(datetime.date(int(sys.argv[2])-1, 12, 25), datetime.date(int(sys.argv[2])+1, 1, 5))
-ylim(0)
+#ylim(0)
 xticks([])
 ylabel('Weighted Power [W]')
 legend(data_dict_all.keys())
@@ -105,7 +105,7 @@ for gear_name in data_dict_all:
             null_data.append(None)
         plot(dates_num, null_data, '*')
 xlim(datetime.date(int(sys.argv[2])-1, 12, 25), datetime.date(int(sys.argv[2])+1, 1, 5))
-ylim(0)
+#ylim(0)
 xlabel('Date')
 ylabel('Max. Power [W]')
 

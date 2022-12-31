@@ -30,6 +30,7 @@ for root, dirs, files in os.walk(str(sys.argv[1]), topdown=True):
     for act_filename in files:
         with open(os.path.join(root, act_filename)) as act_file:
             act_json = json.load(act_file)
+            print(act_json['type'])
             if act_json['start_date'].split('T')[0].split('-')[0] != sys.argv[2]:
                 continue
             try:
@@ -76,20 +77,19 @@ for time in type_time.values():
     type_total_time += time
 
 figure()
-subplot(231)
 pie(gear_time.values(), labels=gear_time.keys(), autopct='%1.1f%%', shadow=False, startangle=0)
 axis('equal')
-title('Shares of (active) riding time (' + str(int(gear_total_time)) + 'h)')
+title('Shares of riding time (' + str(int(gear_total_time)) + 'h)')
 
-subplot(233)
+figure()
 pie(gear_dist.values(), labels=gear_dist.keys(), autopct='%1.1f%%', shadow=False, startangle=0)
 axis('equal')
 title('Shares of riding distance (' + str(int(gear_total_dist)) + 'km)')
 
-subplot(235)
+figure()
 pie(type_time.values(), labels=type_time.keys(), autopct='%1.1f%%', shadow=False, startangle=0)
 axis('equal')
-title('Shares of (active) activity time (' + str(int(type_total_time)) + 'h)')
+title('Shares of activity time (' + str(int(type_total_time)) + 'h)')
 
-tight_layout()
+#tight_layout()
 show()
